@@ -1,0 +1,49 @@
+.form form{
+    margin-top: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.form h1{
+    font-family: 'Poppins', sans-serif;
+}
+.form .error{
+    border-color: red;
+}
+.done h1{
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(52, 167, 17);
+    font-size: medium;
+}
+.done2 h1{
+    font-family: 'Poppins', sans-serif;
+    background-color: red;
+    font-size: medium;
+}
+.form .login{
+    border-radius: 20px;
+    padding: 10px;
+    margin: auto;
+    width: 500px;
+    height: 30px;
+}
+.form button{
+    margin: auto;
+    border: none;
+    color: whitesmoke;
+    background-color: gray;
+    border-radius: 20px;
+    width: 525px;
+    height: 40px;
+    font-family: 'Poppins', sans-serif;
+}
+.form button:hover{
+    background-color: rgb(65, 62, 62);
+}
+.form h5{
+    margin-left: 430px;
+    font-family: 'Poppins', sans-serif;
+}
+.form h5 a{
+    text-decoration: none;
+}

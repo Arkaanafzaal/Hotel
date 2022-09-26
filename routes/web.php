@@ -1,8 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PesanController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LimarController;
+use App\Http\Controllers\PesanController;
+use App\Http\Controllers\TrollController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,17 +19,28 @@ use App\Http\Controllers\LimarController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//user
-Route::get('/', function () {
-    return view('home');
+//login
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/login', [AuthController::class,'index'])->name('login');
+Route::post('/proses_login', [AuthController::class,'proses_login'])->name('proses_login');
+Route::group(['middleware' => ['auth']], function () { 
+    Route::group(['middleware' => ['cek_login:admin']], function () { 
+        Route::get('admin',[AdminController::class,'index'])->name('admin'); 
+    }); 
+    Route::group(['middleware' => ['cek_login:user']], function () { 
+        Route::get('user',[UserController::class,'index'])->name('user'); 
+    }); 
+ 
 });
+Route::post('/logout', [AuthController::class, 'logout']);
+//user
+Route::get('/user', [UserController::class, 'index']);
 Route::get('/form', [PesanController::class, 'create']);
 Route::get('/tabel', [PesanController::class, 'index']);
 Route::post('/save', [PesanController::class, 'store'])->name('simpan');
 //admin
-Route::get('/admin', function () {
-    return view('navbar');
-});
+Route::get('/admin', [AdminController::class, 'index']);
 //fasilitas kamar
 Route::get('/fasilitaskamar', [LimarController::class, 'index']);
 Route::get('/tambahlimar', [LimarController::class, 'create']);

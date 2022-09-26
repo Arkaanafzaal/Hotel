@@ -27,7 +27,10 @@
             </div>
             <li><a href="#reservation">Reservation</a></li>
             <li><a href="#">Blog</a></li>
-            <li><a href="#">Contact</a></li>
+            <form action="/logout" method="POST">
+              @csrf
+              <button type="submit">Logout</button>
+            </form>
          </ul>
       
     </div>
