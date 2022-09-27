@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Limar;
+
+use App\Models\Fastel;
 use Illuminate\Http\Request;
 
-class LimarController extends Controller
+class FastelController extends Controller
 {
     public function index()
     {
-        $limar = Limar::all();
-        return view('fasilitaskamar', compact('limar'));
+        $fastel = Fastel::all();
+        return view('fasilitashotel', compact('fastel'));
     }
 
     
@@ -20,7 +21,7 @@ class LimarController extends Controller
      */
     public function create()
     {
-        return view('tambahlimar');
+        return view('tambahfastel');
     }
 
     /**
@@ -32,27 +33,25 @@ class LimarController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'nama_fasilitas' => 'required',
-            'tipekamar' => 'required',
-            'jumlahkamar' => 'required',
-            'fotokamar' => 'required',
-            'hargakamar' => 'required',
+            'namafasilitas' => 'required',
+            'foto' => 'required',
+            'keterangan' => 'required',
 
         ]
         );
 
-        $limar = Limar::create($request->all());
-        if($request->hasFile('fotokamar')){
-            $request->file('fotokamar')->move('fotokamarhotel/',$request->file('fotokamar')->getClientOriginalName());
-            $limar->fotokamar = $request->file('fotokamar')->getClientOriginalName();
-            $limar->save();
+        $fastel = Fastel::create($request->all());
+        if($request->hasFile('foto')){
+            $request->file('foto')->move('fotofasilitas/',$request->file('foto')->getClientOriginalName());
+            $fastel->foto = $request->file('foto')->getClientOriginalName();
+            $fastel->save();
         }
         if($request->has('user')){
             return redirect()->back()->with('success', 'data berhasil ditambahkan');
         }
 
 
-        return redirect('/fasilitaskamar')->with('success','Data Berhasil Di Tambahkan:)');
+        return redirect('/fasilitashotel')->with('success','Data Berhasil Di Tambahkan:)');
     }
 
     /**

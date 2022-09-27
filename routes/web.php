@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LimarController;
 use App\Http\Controllers\PesanController;
 use App\Http\Controllers\TrollController;
+use App\Http\Controllers\FastelController;
 use App\Http\Controllers\RegisterController;
 
 /*
@@ -20,7 +21,7 @@ use App\Http\Controllers\RegisterController;
 |
 */
 //login
-Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::get('/', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/login', [AuthController::class,'index'])->name('login');
 Route::post('/proses_login', [AuthController::class,'proses_login'])->name('proses_login');
@@ -48,3 +49,7 @@ Route::post('/savelimar', [LimarController::class, 'store'])->name('simpan');
 route::get('/editlimar/{id}',[LimarController::class, 'edit']);
 route::post('/updatelimar/{id}',[LimarController::class, 'update'])->name('update');
 Route::delete('/deletelimar/{id}',[LimarController::class, 'destroy']);
+// fasilitas hotel
+Route::get('/fasilitashotel', [FastelController::class, 'index']);
+Route::get('/tambahfastel', [FastelController::class, 'create']);
+Route::post('/savefastel', [FastelController::class, 'store'])->name('simpan');

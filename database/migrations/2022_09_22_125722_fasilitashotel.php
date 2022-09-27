@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fasilitas_hotel', function (Blueprint $table) {
+        Schema::create('fasilitashotel', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_fasilitas');
+            $table->string('namafasilitas');
+            $table->string('foto');
             $table->string('keterangan');
-            $table->string('image');
             $table->timestamps();
         });
     }

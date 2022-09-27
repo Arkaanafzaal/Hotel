@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('nama_fasilitas');
             $table->string('tipekamar');
+            $table->string('jumlahkamar');
+            $table->string('fotokamar');
+            $table->string('hargakamar');
             $table->timestamps();
         });
     }

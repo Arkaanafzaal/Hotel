@@ -10,6 +10,6 @@ class Limar extends Model
     protected $table="fasilitaskamar";
 
     protected $fillable = [
-        'nama_fasilitas','tipekamar'
+        'nama_fasilitas','tipekamar','jumlahkamar','fotokamar','hargakamar'
     ];
 }
