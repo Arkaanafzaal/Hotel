@@ -88,10 +88,21 @@ class LimarController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'tipekamar' => 'required',
             'nama_fasilitas' => 'required',
+            'tipekamar' => 'required',
+            'jumlahkamar' => 'required',
+            'fotokamar' => 'required',
+            'hargakamar' => 'required',
+
         ]
         );
+
+        $limar = Limar::create($request->all());
+        if($request->hasFile('fotokamar')){
+            $request->file('fotokamar')->move('fotokamarhotel/',$request->file('fotokamar')->getClientOriginalName());
+            $limar->fotokamar = $request->file('fotokamar')->getClientOriginalName();
+            $limar->save();
+        }
 
         $limar = Limar::findorfail($id);
         $limar->update($request->all());

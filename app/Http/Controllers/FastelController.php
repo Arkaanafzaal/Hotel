@@ -73,8 +73,8 @@ class FastelController extends Controller
      */
     public function edit($id)
     {
-        $limar = Limar::findorfail($id);
-        return view('editlimar', compact('limar'));
+        $fastel = Fastel::findorfail($id);
+        return view('editfastel', compact('fastel'));
     }
 
     /**
@@ -87,14 +87,23 @@ class FastelController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'tipekamar' => 'required',
-            'nama_fasilitas' => 'required',
+            'namafasilitas' => 'required',
+            'foto' => 'required',
+            'keterangan' => 'required'
         ]
         );
 
-        $limar = Limar::findorfail($id);
-        $limar->update($request->all());
-        return redirect('/fasilitaskamar')->with('success', 'Data Berhasil Di Update');
+        
+        $fastel = Fastel::create($request->all());
+        if($request->hasFile('foto')){
+            $request->file('foto')->move('fotofasilitas/',$request->file('foto')->getClientOriginalName());
+            $fastel->foto = $request->file('foto')->getClientOriginalName();
+            $fastel->update();
+        }
+        
+        $fastel = Fastel::findorfail($id);
+        $fastel->update($request->all());
+        return redirect('/fasilitashotel')->with('success', 'Data Berhasil Di Update');
     }
 
     /**
@@ -105,8 +114,8 @@ class FastelController extends Controller
      */
     public function destroy($id)
     {
-        $limar = Limar::findorfail($id);
-        $limar->delete();
+        $fastel = Fastel::findorfail($id);
+        $fastel->delete();
         return back()->with('destroy','Data Berhasil Di Hapus');
     }
 }

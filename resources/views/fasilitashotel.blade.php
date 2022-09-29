@@ -21,8 +21,8 @@
       </td>
       <td>{{ $f->keterangan}}</td>
         <td>
-            <a href="{{ url('editlimar',$f->id) }}"class="btn btn-warning">Edit</a>
-                <form action="{{ url('deletelimar',$f->id) }}" method="POST">
+            <a href="{{ url('editfastel',$f->id) }}"class="btn btn-warning">Edit</a>
+                <form action="{{ url('deletefastel',$f->id) }}" method="POST">
                   @csrf
                   @method('delete')
                   <button class="btn btn-danger" >Hapus</button>

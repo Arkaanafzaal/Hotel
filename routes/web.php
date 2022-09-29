@@ -53,3 +53,6 @@ Route::delete('/deletelimar/{id}',[LimarController::class, 'destroy']);
 Route::get('/fasilitashotel', [FastelController::class, 'index']);
 Route::get('/tambahfastel', [FastelController::class, 'create']);
 Route::post('/savefastel', [FastelController::class, 'store'])->name('simpan');
+route::get('/editfastel/{id}',[FastelController::class, 'edit']);
+route::post('/update/{id}',[FastelController::class, 'update'])->name('update');
+Route::delete('/deletefastel/{id}',[FastelController::class, 'destroy']);
