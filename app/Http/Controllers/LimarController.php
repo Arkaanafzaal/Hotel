@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\LimarRequest;
 use App\Models\Limar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class LimarController extends Controller
 {
@@ -85,28 +88,47 @@ class LimarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(LimarRequest $request, $id)
     {
-        $this->validate($request,[
-            'nama_fasilitas' => 'required',
-            'tipekamar' => 'required',
-            'jumlahkamar' => 'required',
-            'fotokamar' => 'required',
-            'hargakamar' => 'required',
+        // $this->validate($request,[
+        //     'nama_fasilitas' => 'required',
+        //     'tipekamar' => 'required',
+        //     'jumlahkamar' => 'required',
+        //     'fotokamar' => 'required',
+        //     'hargakamar' => 'required',
 
-        ]
-        );
+        // ]
+        // );
 
-        $limar = Limar::create($request->all());
-        if($request->hasFile('fotokamar')){
-            $request->file('fotokamar')->move('fotokamarhotel/',$request->file('fotokamar')->getClientOriginalName());
-            $limar->fotokamar = $request->file('fotokamar')->getClientOriginalName();
-            $limar->save();
+        // $limar = Limar::create($request->all());
+        // if($request->hasFile('fotokamar')){
+        //     $request->file('fotokamar')->move('fotokamarhotel/',$request->file('fotokamar')->getClientOriginalName());
+        //     $limar->fotokamar = $request->file('fotokamar')->getClientOriginalName();
+        //     $limar->save();
+        // }
+
+        // $limar = Limar::findorfail($id);
+        // $limar->update($request->all());
+        // return redirect('/fasilitaskamar')->with('success', 'Data Berhasil Di Update');
+
+        $data = Limar::findorfail($id);
+        $data->nama_fasilitas = $request->nama_fasilitas;
+        $data->tipekamar = $request->tipekamar;
+        $data->jumlahkamar = $request->jumlahkamar;
+        $data->hargakamar = $request->hargakamar;
+
+        if($request->file('fotokamar')){
+            $file = $request->file('fotokamar');
+            $filename = time().str_replace(" ", "", $file->getClientOriginalName());
+            $file->move('fotokamarhotel', $filename);
+
+            File::delete('fotokamar', $data->fotokamar);
+
+            $data->fotokamar = $filename;
         }
+        $data->save();
 
-        $limar = Limar::findorfail($id);
-        $limar->update($request->all());
-        return redirect('/fasilitaskamar')->with('success', 'Data Berhasil Di Update');
+        return redirect('/fasilitaskamar')->with('success', 'data berhasil diupdate');
     }
 
     /**

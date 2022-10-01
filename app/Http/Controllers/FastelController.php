@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FasteRequest;
 use App\Models\Fastel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class FastelController extends Controller
 {
@@ -84,26 +86,44 @@ class FastelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FasteRequest $request, $id)
     {
-        $this->validate($request,[
-            'namafasilitas' => 'required',
-            'foto' => 'required',
-            'keterangan' => 'required'
-        ]
-        );
+        // $this->validate($request,[
+            // 'namafasilitas' => 'required',
+            // 'foto' => 'required',
+            // 'keterangan' => 'required'
+        // ]
+        // );
 
         
-        $fastel = Fastel::create($request->all());
-        if($request->hasFile('foto')){
-            $request->file('foto')->move('fotofasilitas/',$request->file('foto')->getClientOriginalName());
-            $fastel->foto = $request->file('foto')->getClientOriginalName();
-            $fastel->update();
-        }
+        // $fastel = Fastel::create($request->all());
+        // if($request->hasFile('foto')){
+        //     $request->file('foto')->move('fotofasilitas/',$request->file('foto')->getClientOriginalName());
+        //     $fastel->foto = $request->file('foto')->getClientOriginalName();
+        //     $fastel->update();
+        // }
         
-        $fastel = Fastel::findorfail($id);
-        $fastel->update($request->all());
-        return redirect('/fasilitashotel')->with('success', 'Data Berhasil Di Update');
+        // $fastel = Fastel::findorfail($id);
+        // $fastel->update($request->all());
+        // return redirect('/fasilitashotel')->with('success', 'Data Berhasil Di Update');
+
+        $data =  Fastel::findorfail($id);
+        $data->namafasilitas = $request->namafasilitas;
+        $data->keterangan = $request->keterangan;
+
+        if($request->file('fotokamar')){
+            $file = $request->file('fotokamar');
+
+            $filename = time().str_replace(" ", "", $file->getClientOriginalName());
+            $file->move('fotokamarfasilitas', $filename);
+
+            File::delete('fotokamar', $data->fotokamar);
+
+            $data->fotokamar = $filename;  
+        }
+        $data->save();
+
+        return redirect('/fasilitashotel')->with('success', 'data berhasil diupdate');
     }
 
     /**

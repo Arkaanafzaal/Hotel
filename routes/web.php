@@ -47,8 +47,9 @@ Route::get('/fasilitaskamar', [LimarController::class, 'index']);
 Route::get('/tambahlimar', [LimarController::class, 'create']);
 Route::post('/savelimar', [LimarController::class, 'store'])->name('simpan');
 route::get('/editlimar/{id}',[LimarController::class, 'edit']);
-route::post('/updatelimar/{id}',[LimarController::class, 'update'])->name('update');
+route::post('/updatelimar/{id}',[LimarController::class, 'update'])->name('updatelimar');
 Route::delete('/deletelimar/{id}',[LimarController::class, 'destroy']);
+
 // fasilitas hotel
 Route::get('/fasilitashotel', [FastelController::class, 'index']);
 Route::get('/tambahfastel', [FastelController::class, 'create']);

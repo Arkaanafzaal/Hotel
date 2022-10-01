@@ -7,10 +7,9 @@
         <div class="col-8">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('update',$limar->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('updatelimar',$limar->id) }}" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         @method('POST')
-
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nama Fasilitas</label>
                             <input type="text" class="form-control" name="nama_fasilitas" value="{{ $limar->nama_fasilitas}}">
